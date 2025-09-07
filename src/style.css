@@ -1,0 +1,51 @@
+.background {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    background-color: beige;
+    box-sizing: border-box;
+    padding: 2rem;
+    margin: 0;
+    overflow: hidden;
+}
+
+.button-container {
+    width: 450px;
+    height: 400px;
+    padding: 0;
+    border: none;
+    background: none;
+    background-image: url(/boom.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    color: red;
+    font-size: 1.8rem;
+    font-family: "Marker Felt, cursive, sans-serif";
+}
+
+.button-text {
+    display: inline-block; 
+    transform: rotate(-13deg);
+}
+
+.image-container {
+    width: 320px;
+    transform: rotate(-5deg);
+    border: 6px dashed #ff9800;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    background: #fffbe6;
+    margin: 2rem 0;
+    padding: 1rem;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+}
