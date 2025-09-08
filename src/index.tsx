@@ -6,44 +6,79 @@ const App = () => {
     const [image, setImage] = useState<string>("");
     const [message, setMessage] = useState<string>("");
 
-    const fetchMeme = (answer: string) => {
+    // const fetchMeme = (answer: string) => {
 
-        fetch("https://yesno.wtf/api")
-            .then((response) => {
+    //     fetch("https://yesno.wtf/api")
+    //         .then((response) => {
+    //             if (!response.ok) throw new Error("something went wrong");
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             if (data.answer === answer) {
+    //                 const result = data.image;
+    //                 console.log(result);
+    //                 setImage(result);
+    //             } else {
+    //                 fetchMeme(answer);
+    //             }
+    //         })
+    //         .catch((error) => console.error("Error fetching answer: " + error));
+    // };
+
+    const fetchMeme = async (answer: string) => {
+        try {
+            while (true) {
+                const response = await fetch("https://yesno.wtf/api");
                 if (!response.ok) throw new Error("something went wrong");
-                return response.json();
-            })
-            .then((data) => {
+                const data = await response.json();
                 if (data.answer === answer) {
-                    const result = data.image;
-                    console.log(result);
-                    setImage(result);
-                } else {
-                    fetchMeme(answer);
+                    setImage(data.image);
+                    break;
                 }
-            })
-            .catch((error) => console.error("Error fetching answer: " + error));
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
-    const testLuck = new Promise<string>((resolve, reject) => {
-        let luck: boolean = Math.random() < 0.5;
+    // const testLuck = new Promise<string>((resolve, reject) => {
+    //     let luck: boolean = Math.random() < 0.5;
 
-        if (luck) resolve("You are lucky!");
-        else reject("Better luck next time...");
-    });
+    //     if (luck) resolve("You are lucky!");
+    //     else reject(new Error("Better luck next time..."));
+    // });
 
-    const handleClick = () => {
-        testLuck
-            .then((msg) => {
-                console.log(msg);
-                setMessage(msg);
-                fetchMeme("yes");
-            })
-            .catch((err) => {
-                console.log("Error occured: " + err);
-                setMessage(err);
-                fetchMeme("no");
-            });
+    // const handleClick = () => {
+    //     testLuck
+    //         .then((msg) => {
+    //             console.log(msg);
+    //             setMessage(msg);
+    //             fetchMeme("yes");
+    //         })
+    //         .catch((err) => {
+    //             console.log("Error occured: " + err);
+    //             setMessage(err);
+    //             fetchMeme("no");
+    //         });
+    // };
+
+        const handleClick = async () => {
+        const testLuck = new Promise<string>((resolve, reject) => {
+            let luck: boolean = Math.random() < 0.5;
+            if (luck) resolve("You are lucky!");
+            else reject(new Error("Better luck next time..."));
+        });
+    
+        try {
+            const value = await testLuck;
+            console.log(value);
+            setMessage(value);
+            await fetchMeme("yes");
+        } catch (error) {
+            console.log("Error occured: " + String(error));
+            setMessage(String(error));
+            await fetchMeme("no");
+        }
     };
 
     return (
